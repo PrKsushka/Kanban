@@ -1,0 +1,15 @@
+@import '../styles/style';
+
+.wrapper{
+  width: 100%;
+  background: $bg;
+  min-height: 100vh;
+  .mainText{
+    margin:0;
+    @include fonts(60px, $mainText, 'Roboto');
+    font-weight: 400;
+    color: $mainText;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}

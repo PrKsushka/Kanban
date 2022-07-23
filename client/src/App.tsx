@@ -1,11 +1,8 @@
-import React from 'react';
+import React from "react";
+import Kanban from "./app/kanban";
 
 function App() {
-  return (
-    <div className="App">
-      hello world
-    </div>
-  );
+  return <Kanban />;
 }
 
 export default App;
