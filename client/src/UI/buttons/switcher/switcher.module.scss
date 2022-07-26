@@ -1,0 +1,17 @@
+.switcher{
+  position: absolute;
+  width: 77px;
+  border: 5px solid #AECDC4;
+  top: 78px;
+  right: 128px;
+  .circle{
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background: #EDB7BC;
+    border-radius: 50%;
+    top: -10px;
+    cursor: pointer;
+    transition: .1s cubic-bezier(1, -0.26, 1, 1);
+  }
+}

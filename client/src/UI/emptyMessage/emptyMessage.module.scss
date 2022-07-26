@@ -1,0 +1,6 @@
+@import '../../styles/style';
+.message{
+  @include fonts(16px, #606060);
+  @include builder(flex, 100%);
+  justify-content: center;
+}

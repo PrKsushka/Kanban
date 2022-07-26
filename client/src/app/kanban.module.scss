@@ -1,15 +1,45 @@
 @import '../styles/style';
 
-.wrapper{
-  width: 100%;
-  background: $bg;
-  min-height: 100vh;
-  .mainText{
-    margin:0;
+.wrapper {
+  @include builder(flex, 100%);
+  flex-wrap: wrap;
+  justify-content: center;
+.header {
+  @include builder(flex, 100%);
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .mainText {
+    margin: 53px 50px 50px 0;
     @include fonts(60px, $mainText, 'Roboto');
     font-weight: 400;
     color: $mainText;
     text-transform: uppercase;
     text-align: center;
+  }
+
+  .blockForCreatingNote {
+    @include builder(flex, 100%);
+    justify-content: center;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+
+    .inputForEnteringText {
+      width: 573px;
+      height: 55px;
+      background: #FFFFFF;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 34px;
+      border: none;
+      margin-right: 23px;
+      padding: 15px;
+      box-sizing: border-box;
+      @include fonts(14px, black);
+    }
+  }
+}
+  .wrapperForColumns {
+    display: flex;
+    align-items: flex-start;
   }
 }

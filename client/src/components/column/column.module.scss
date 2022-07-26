@@ -1,0 +1,17 @@
+@import '../../styles/style';
+.column {
+  @include builder(flex, 306px);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-right: 61px;
+  .title {
+    @include fonts(27px, $mainText);
+  }
+}
+.wrapperForButtons{
+  @include builder(flex, 100%);
+  justify-content: flex-end;
+  padding: 0 21px 15px 0;
+  box-sizing: border-box;
+  align-items: center;
+}

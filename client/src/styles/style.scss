@@ -1,2 +1,6 @@
 @import "mixin";
 @import "variables";
+body{
+  background: $bg;
+  margin: 0;
+}
