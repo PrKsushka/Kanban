@@ -1,0 +1,17 @@
+@import '../../styles/style';
+
+.card {
+  @include builder(flex, 306px);
+  background: white;
+  min-height: 163px;
+  max-height: 170px;
+  border-radius: 34px;
+  padding: 34px 21px 0 21px;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+
+  span {
+    @include fonts(16px, black);
+  }
+}

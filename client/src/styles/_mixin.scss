@@ -1,0 +1,10 @@
+@mixin fonts($fS, $fC, $fWeight:400){
+  color: $fC;
+  font-size: $fS;
+  font-weight: $fWeight;
+  font-family: 'Roboto', sans-serif;
+}
+@mixin builder($d, $w){
+  display: $d;
+  width: $w;
+}
