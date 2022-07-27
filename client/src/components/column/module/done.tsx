@@ -1,5 +1,5 @@
 import Column from "../column";
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../../card/card";
 import { useSelector } from "react-redux";
 import { StoreState } from "../../../store/types";
@@ -9,7 +9,7 @@ const Done: React.FunctionComponent = () => {
   const notesDone = useSelector((state: StoreState) => state.notes.notesDone);
   return (
     <Column title={"Done"}>
-      {notesDone.length > 0 ? notesDone.map((el) => <Card el={el} key={el.id} />) : <EmptyMessage />}
+      {notesDone.length > 0 ? notesDone.map((el) => <Card el={el} key={el._id} />) : <EmptyMessage />}
     </Column>
   );
 };

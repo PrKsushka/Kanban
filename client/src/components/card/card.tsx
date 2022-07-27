@@ -6,7 +6,7 @@ interface CardTypes {
 }
 const Card: React.FunctionComponent<CardTypes> = ({ children, el }) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} key={el._id}>
       <span>{el.note}</span>
       {children}
     </div>

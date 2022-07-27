@@ -1,8 +1,10 @@
 import express from "express";
 import connectionToMongoDataBase from "./db/db";
 import note from "./db/routes/noteRoutes";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 connectionToMongoDataBase();

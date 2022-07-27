@@ -1,11 +1,11 @@
 import { CREATE_NEW_NOTE, DELETE_NOTE, MOVE_NOTE } from "./notes.constants";
-import { NotesStateIfWithoutAPI } from "../types";
+import { NotesState } from "../types";
 
 type Action = {
   type: string;
   payload?: undefined;
 };
-const initialState: NotesStateIfWithoutAPI = {
+const initialState: NotesState = {
   notesToDo: [],
   notesInProgress: [],
   notesDone: [],

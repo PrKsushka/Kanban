@@ -5,19 +5,29 @@ type Action = {
   type: string;
   payload?: unknown;
 };
+type PayloadMove = {
+  arr: Array<Note>;
+  status: string;
+  moveStatus: string;
+};
 const initialState: NotesState = {
-  notes: [],
+  notesToDo: [],
+  notesInProgress: [],
+  notesDone: [],
   deleteStatus: "",
   moveStatus: "",
   createStatus: "",
 };
+type PayloadGetData = [{ do: Array<Note> }, { progress: Array<Note> }, { done: Array<Note> }];
 const notesReducer = (state = initialState, action: Action = { type: "DEFAULT" }) => {
   switch (action.type) {
     case GET_DATA_ABOUT_NOTES: {
-      const payload = action.payload as Array<Note>;
+      const payload = action.payload as PayloadGetData;
       return {
         ...state,
-        notes: [...payload],
+        notesToDo: [...payload[0].do],
+        notesInProgress: [...payload[1].progress],
+        notesDone: [...payload[2].done],
       };
     }
     case DELETE_NOTE: {
@@ -27,9 +37,10 @@ const notesReducer = (state = initialState, action: Action = { type: "DEFAULT" }
       };
     }
     case MOVE_NOTE: {
+      const payload = action.payload as PayloadMove;
       return {
         ...state,
-        moveStatus: action.payload,
+        moveStatus: payload.moveStatus,
       };
     }
     case CREATE_NEW_NOTE: {

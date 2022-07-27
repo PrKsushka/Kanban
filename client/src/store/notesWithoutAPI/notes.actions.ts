@@ -14,12 +14,6 @@ export function createNewNote(obj: { id: number; note: string; status: string })
   };
 }
 
-// export function getDataAboutNotes() {
-//   return {
-//     action: GET_DATA_ABOUT_NOTES,
-//   };
-// }
-
 export function moveNote(obj: { id: number; status: string }) {
   return {
     type: MOVE_NOTE,

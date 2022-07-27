@@ -4,16 +4,15 @@ import Notes from "../../models/note";
 const getDataAboutNotes = async (req: Request, res: Response) => {
   try {
     let notes;
-    if (req.query.status === "do") {
-      notes = await Notes.find({ status: "do" });
-    } else if (req.query.status === "process") {
-      notes = await Notes.find({ status: "process" });
-    } else if (req.query.status === "done") {
-      notes = await Notes.find({ status: "done" });
-    } else {
-      notes = await Notes.find({});
-    }
-    res.status(200).json(notes);
+    const toDoNotes = await Notes.find({ status: "do" });
+    const inProgressNotes = await Notes.find({ status: "progress" });
+    const doneNotes = await Notes.find({ status: "done" });
+    const data = [
+      { do: toDoNotes },
+      { progress: inProgressNotes },
+      { done: doneNotes },
+    ];
+    res.status(200).json(data);
   } catch (e: any) {
     res.status(e.statusCode).json(e.message);
   }

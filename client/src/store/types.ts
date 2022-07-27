@@ -1,15 +1,11 @@
 export type Note = {
-  id: number;
+  id?: number;
+  _id: number;
   status: string;
   note: string;
 };
+
 export type NotesState = {
-  notes: Array<Note>;
-  deleteStatus: string;
-  moveStatus: string;
-  createStatus: string;
-};
-export type NotesStateIfWithoutAPI = {
   notesToDo: Array<Note>;
   notesInProgress: Array<Note>;
   notesDone: Array<Note>;
@@ -18,5 +14,5 @@ export type NotesStateIfWithoutAPI = {
   createStatus: string;
 };
 export interface StoreState {
-  notes: NotesStateIfWithoutAPI;
+  notes: NotesState;
 }
