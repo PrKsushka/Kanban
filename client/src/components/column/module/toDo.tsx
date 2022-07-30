@@ -3,43 +3,62 @@ import Card from "../../card/card";
 import styles from "../column.module.scss";
 import Button from "../../../UI/buttons/buttonDeleteAndMove/button";
 import butColor from "../../../UI/buttons/colorsForButtons.constants";
-import React, { useState } from "react";
-import { deleteNote, getDataAboutNotes, moveNote } from "../../../store/notes/notes.actions";
-import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "../../../store/types";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { DELETE_NOTE } from "../../../graphQl/mutations/deleteNote";
+import { MOVE_NOTE } from "../../../graphQl/mutations/moveNote";
+import { GET_DATA_ABOUT_NOTES } from "../../../graphQl/queries/getDataAboutNotes";
+import { NoteType } from "../../../types/noteType";
 import EmptyMessage from "../../../UI/emptyMessage/emptyMessage";
 
-const ToDo: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
-  const notes = useSelector((state: StoreState) => state.notes.notesToDo);
+interface ToDoTypes {
+  note?: NoteType;
+}
+
+const ToDo: React.FunctionComponent<ToDoTypes> = ({ note }) => {
+  const [deleteNote] = useMutation(DELETE_NOTE);
+  const [moveNote] = useMutation(MOVE_NOTE);
+  const [toDoNotes, setToDoNotes] = useState<Array<NoteType>>([]);
+  const [clickHandler, setClickHandler] = useState(false);
+  const { refetch, data, loading, error } = useQuery(GET_DATA_ABOUT_NOTES, { variables: { type: "do" } });
+  useEffect(() => {
+    if (!loading) {
+      if (note) {
+        setToDoNotes((prev) => [...prev, note]);
+      }
+      if (clickHandler) {
+        refetch().then((res) => {
+          setToDoNotes((prev) => [...res.data.getDataAboutNotes]);
+        });
+      } else {
+        setToDoNotes((prev) => [...prev, ...data.getDataAboutNotes]);
+      }
+    }
+  }, [data, note, clickHandler]);
   const deleteCurrentNote = (id: number) => {
-    dispatch(deleteNote(id));
+    deleteNote({ variables: { deleteNoteId: id } });
   };
   const startToDo = (id: number) => {
-    dispatch(
-      moveNote({
-        id,
-        status: "progress",
-      })
-    );
+    moveNote({ variables: { moveNoteId: id, status: "progress" } });
+    setClickHandler(!clickHandler);
   };
   return (
     <Column title={"To do"}>
-      {notes.length > 0 ? (
-        notes.map((el) => (
-          <Card el={el} key={el._id}>
+      {toDoNotes.length > 0 ? (
+        toDoNotes.map((el: NoteType) => (
+          <Card el={el} key={el.id}>
             <div className={styles.wrapperForButtons}>
               <Button
-                func={() => deleteCurrentNote(el._id)}
+                func={() => deleteCurrentNote(el.id)}
                 content={"Delete"}
                 style={{ background: butColor.green, marginRight: "19px" }}
               />
-              <Button func={() => startToDo(el._id)} content={"Start"} style={{ background: butColor.darkPink }} />
+              <Button func={() => startToDo(el.id)} content={"Start"} style={{ background: butColor.darkPink }} />
             </div>
           </Card>
         ))
       ) : (
-        <EmptyMessage />
+        <EmptyMessage error={error} />
       )}
     </Column>
   );

@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./emptyMessage.module.scss";
 
-const EmptyMessage: React.FunctionComponent = () => {
-  return <div className={styles.message}>Column is empty</div>;
+interface EmptyMessageTypes {
+  error: any;
+}
+
+const EmptyMessage: React.FunctionComponent<EmptyMessageTypes> = ({ error }) => {
+  return <div className={styles.message}>{error ? error : "Column is empty"}</div>;
 };
 export default EmptyMessage;

@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import styles from "./kanban.module.scss";
-import { useDispatch } from "react-redux";
 import { createNewNote, getDataAboutNotes } from "../store/notes/notes.actions";
 import AddButton from "../UI/buttons/addButton/addButton";
 import Switcher from "../UI/buttons/switcher/switcher";
 import ToDo from "../components/column/module/toDo";
 import InProcess from "../components/column/module/inProcess";
 import Done from "../components/column/module/done";
+import { useMutation } from "@apollo/client";
+import { ADD_NEW_NOTE } from "../graphQl/mutations/addNewNote";
+import { NoteType } from "../types/noteType";
 
 const Kanban: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
   const [text, setText] = useState("");
-  useEffect(() => {
-    dispatch(getDataAboutNotes());
-  }, []);
+  const [createNewNote] = useMutation(ADD_NEW_NOTE);
+  const [toDoNote, setToDoNote] = useState<NoteType>();
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
   const sendNote = () => {
     if (text !== "") {
-      dispatch(createNewNote({ note: text, status: "do" }));
+      createNewNote({ variables: { input: { note: text, status: "do" } } }).then((res) => {
+        setToDoNote(res.data.addNewNote);
+      });
     } else {
       alert("Please enter words");
     }
@@ -47,7 +49,7 @@ const Kanban: React.FunctionComponent = () => {
         </div>
       </div>
       <div className={styles.wrapperForColumns}>
-        <ToDo />
+        <ToDo note={toDoNote} />
         <InProcess />
         <Done />
       </div>
