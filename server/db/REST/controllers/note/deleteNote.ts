@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Notes from "../../models/note";
+import Notes from "../../../models/note";
 import mongoose from "mongoose";
 
 const deleteNote = async (req: Request, res: Response) => {
